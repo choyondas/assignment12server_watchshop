@@ -28,7 +28,14 @@ async function run() {
         const reviewCollection = database.collection('review');
 
 
+        //post products
 
+        app.post('/products', async (req, res) => {
+            const product = req.body;
+            const result = await productsCollection.insertOne(product);
+            console.log(result)
+            res.json(result);
+        })
 
 
         //get all products form databse
@@ -57,39 +64,6 @@ async function run() {
             console.log(result);
         })
 
-
-        // //for users put
-        // app.put('/users', async (req, res) => {
-        //     const user = req.body;
-
-        //     const filter = { email: user.email };
-        //     const option = { upsert: true };
-        //     const updateDoc = { $set: user.data };
-        //     const result = usersCollection.updateOne(filter, updateDoc, option);
-        //     res.json(result);
-        // })
-
-
-
-        // //for appointments post
-        // app.post('/appointments', async (req, res) => {
-        //     const appointment = req.body;
-        //     const result = await appointmentCollection.insertOne(appointment);
-
-        //     res.json(result)
-        // })
-
-        // //for appointments get
-        // app.get('/appointments', async (req, res) => {
-        //     const email = req.query.email;
-        //     const date = req.query.date;
-
-        //     const query = { email: email, data: date }
-        //     console.log(query)
-        //     const cursor = appointmentCollection.find(query);
-        //     const appointments = await cursor.toArray();
-        //     res.json(appointments);
-        // })
 
 
 
@@ -149,7 +123,14 @@ async function run() {
             console.log(result)
             res.json(result);
         })
+        //get review data
 
+        app.get('/review', async (req, res) => {
+
+            const cursor = reviewCollection.find();
+            const review = await cursor.toArray();
+            res.json(review);
+        })
 
     } finally {
         //await client.close();
