@@ -200,13 +200,29 @@ async function run() {
 
 
 
+        // show updated data after update by put 
+        app.put('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedUser = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    name: updatedUser.username,
+                    address: updatedUser.address
+                },
+            };
+            const result = await ordersCollection.updateOne(filter, updateDoc, options)
+            console.log('updating', id)
+            res.json(result)
+        })
+    }
 
 
 
 
 
-
-    } finally {
+    finally {
         //await client.close();
     }
 
