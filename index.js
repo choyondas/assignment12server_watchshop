@@ -166,6 +166,46 @@ async function run() {
             res.json(review);
         })
 
+
+
+
+        // ---------manage All orders------
+
+        // get customers order in the my review page
+        app.get('/orders/all', async (req, res) => {
+            const cursor = ordersCollection.find({});
+            const orders = await cursor.toArray();
+            res.send(orders);
+        });
+
+        // dleted users order from manage all order page
+        app.delete('/orders/all/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await ordersCollection.deleteOne(query);
+            console.log('deleted id', result);
+            res.json(result);
+        });
+
+
+
+        // user update from server to show 
+        app.get('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await ordersCollection.findOne(query);
+            res.send(result);
+            // ai part er pore data ta /5000/users/id te pabo 
+        })
+
+
+
+
+
+
+
+
+
     } finally {
         //await client.close();
     }
