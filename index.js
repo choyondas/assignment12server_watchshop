@@ -208,7 +208,7 @@ async function run() {
             const options = { upsert: true };
             const updateDoc = {
                 $set: {
-                    name: updatedUser.username,
+                    username: updatedUser.username,
                     address: updatedUser.address
                 },
             };
