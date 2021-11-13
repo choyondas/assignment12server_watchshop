@@ -56,6 +56,16 @@ async function run() {
 
         })
 
+        // delete product from database
+        app.delete('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await productsCollection.deleteOne(query);
+            console.log('deleted id', result);
+            res.json(result);
+        })
+
+
         // //for users post
         app.post('/users', async (req, res) => {
             const user = req.body;
@@ -113,6 +123,9 @@ async function run() {
             console.log('deleted id', result);
             res.json(result);
         })
+
+
+
 
         // dleted user for my order review page btn 
         app.delete('/orders/:email', async (req, res) => {
